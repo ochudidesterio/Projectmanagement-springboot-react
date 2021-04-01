@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-LaucherApplication<laucher>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "com.fullstack.laucher.LaucherApplication",
+      "projectName": "laucher",
+      "args": ""
+    }
+  ]
+}
