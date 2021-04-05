@@ -1,15 +1,33 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {createProject} from '../../actions/projectActions'
 
-class AddProject extends Component() {
+class AddProject extends Component {
   constructor() {
     super();
+
     this.state = {
       projectName: "",
       projectIdentifier: "",
       description: "",
       start_date: "",
-      end_date: "",
+      end_date: ""
     };
+  }
+  onChange(e){
+    this.setState({[e.target.name]: e.target.value})
+  }
+  onSubmit(e){
+    e.preventDefault()
+    const newProject={
+      projectName: this.state.projectName,
+      projectIdentifier: this.state.projectIdentifier,
+      description: this.state.description,
+      start_date: this.state.start_date,
+      end_date: this.state.end_date
+    }
+    this.props.createProject(newProject,this.props.history)
   }
   render() {
     return (
@@ -19,7 +37,7 @@ class AddProject extends Component() {
             <div className="col-md-8 m-auto">
               <h5 className="display-4 text-center">Create Project form</h5>
               <hr />
-              <form>
+              <form onSubmit={this.onSubmit.bind(this)}>
                 <div className="form-group">
                   <input
                     type="text"
@@ -27,6 +45,7 @@ class AddProject extends Component() {
                     placeholder="Project Name"
                     name="projectName"
                     value={this.state.projectName}
+                    onChange={this.onChange.bind(this)}
                   />
                 </div>
                 <div className="form-group">
@@ -36,6 +55,7 @@ class AddProject extends Component() {
                     placeholder="Unique Project ID"
                     name="projectIdentifier"
                     value={this.state.projectIdentifier}
+                    onChange={this.onChange.bind(this)}
                   />
                 </div>
                 {
@@ -48,6 +68,7 @@ class AddProject extends Component() {
                     placeholder="Project Description"
                     name="description"
                     value={this.state.description}
+                    onChange={this.onChange.bind(this)}
                   />
                 </div>
                 <h6>Start Date</h6>
@@ -57,6 +78,7 @@ class AddProject extends Component() {
                     className="form-control form-control-lg"
                     name="start_date"
                     value={this.state.start_date}
+                    onChange={this.onChange.bind(this)}
                   />
                 </div>
                 <h6>Estimated End Date</h6>
@@ -66,6 +88,7 @@ class AddProject extends Component() {
                     className="form-control form-control-lg"
                     name="end_date"
                     value={this.state.end_date}
+                    onChange={this.onChange.bind(this)}
                   />
                 </div>
 
@@ -81,5 +104,8 @@ class AddProject extends Component() {
     );
   }
 }
+AddProject.propTypes={
+  createProject : PropTypes.func.isRequired
+}
 
-export default AddProject;
+export default connect(null,{createProject}) (AddProject);
